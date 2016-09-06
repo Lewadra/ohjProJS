@@ -1,13 +1,12 @@
+var mainController = require('./controllers/mainController');
+
 module.exports = function(app) {
-
-	// server routes ===========================================================
-	// handle things like api calls
-	// authentication routes
-
-	// frontend routes =========================================================
-	// route to handle all angular requests
-	app.get('*', function(req, res) {
-		res.sendfile('./public/index.html');
+	app.get('/', function(req, res) {
+		mainController.getIndexPage(req,res);
 	});
 
+	app.get("/testiresti", function(req, res) {
+		mainController.testiresti(req, res);
+	});
 };
+
