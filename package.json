@@ -8,7 +8,8 @@
 	"method-override" : "~2.0.2",
     "request" : "latest",
     "cheerio" : "latest",
-    "underscore" : "latest"
+    "underscore" : "latest",
+    "fs" : "latest"
   }
 }
 

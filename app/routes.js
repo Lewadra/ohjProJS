@@ -5,8 +5,13 @@ module.exports = function(app) {
 		mainController.getIndexPage(req,res);
 	});
 
-	app.get("/testiresti", function(req, res) {
-		mainController.testiresti(req, res);
+	app.get("/kaupungit", function(req, res) {
+		mainController.getCities(req, res);
 	});
+
+	app.get("/naapurit/:id", function(req, res ){
+		mainController.getNeighbors(req, res);
+	});
+
 };
 
