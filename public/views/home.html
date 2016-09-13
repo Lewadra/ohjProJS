@@ -1,5 +1,20 @@
-<div class="jumbotron text-center">
-	<h1>Home Page 4 Life</h1>
 
-	<p>{{ tagline }}</p>
+<div class="jumbotron text-center" ng-controller="MainController">
+	<div class="row">
+	<h1>Kartta</h1>
+	<canvas id="mapcanvas" width="1000" height="500" cities="cities" style="border:1px solid black;"map-points ng-click="onMapClick($event)"></canvas>
+</div>
+	<div class="row">
+		<div class="col-lg-6">
+			<h3> Alkupiste: {{origin}} </h3>
+		</div>
+		<div class="col-lg-6">
+			<h3> Loppupiste: {{destination}} </h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<h3> Matkan pituus: {{distance}}</h3>
+		</div>
+	</div>
 </div>
