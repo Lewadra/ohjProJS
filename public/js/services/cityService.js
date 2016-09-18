@@ -8,4 +8,9 @@ app.service('CityService', function($http) {
         performHttpGet(url, sCb, eCb);
     };
 
+    this.getDistance = function(url, sCb, eCb) {
+        performHttpGet(url, sCb, eCb);
+    }
+
+
 });

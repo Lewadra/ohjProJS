@@ -26,9 +26,21 @@ app.controller('MainController', function($scope, $http, CityService) {
 			if(length <= radius) {
 				$scope.origin = toggle ? $scope.cities[i].cityName : $scope.origin;
 				$scope.destination = !toggle ? $scope.cities[i].cityName : "";
+				getDistance();
 				return;
 			}
 		}
 	};
+
+	var getDistance = function() {
+		if($scope.origin !== "" && $scope.destination !== "") {
+			var url = 'etaisyys/' + $scope.origin + '/' + $scope.destination;
+			CityService.getDistance(url, function(resp) {
+				if(resp.length != 0) {
+					$scope.distance = 200; //tänne se vastaus
+				}
+			}, function(){});
+		}
+	}
 
 });

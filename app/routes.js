@@ -9,8 +9,8 @@ module.exports = function(app) {
 		mainController.getCities(req, res);
 	});
 
-	app.get("/naapurit/:id", function(req, res ){
-		mainController.getNeighbors(req, res);
+	app.get("/etaisyys/:origin/:destination", function(req, res ){
+		mainController.getDistance(req, res);
 	});
 
 };
