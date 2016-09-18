@@ -17,6 +17,7 @@ db.once('open', function() {
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 initializeDB.init();
 require('./app/routes')(app); // pass our application into our routes

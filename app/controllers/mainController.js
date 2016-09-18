@@ -14,13 +14,9 @@ module.exports = {
     getDistance: function(req, res) {
         console.log(req.params.origin);
         console.log(req.params.destination);
-        // tähä se dikstra
-
         res.send("dikstra");
-        /*
-         Cities.model.find({ 'cityName' : req.params.id}, function(err, result) {
-         res.send(result);
-         })
-         */;
     },
+    postDistance: function(req,res) {
+        console.log(req.body);
+    }
 };

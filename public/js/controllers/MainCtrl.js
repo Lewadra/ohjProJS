@@ -32,6 +32,17 @@ app.controller('MainController', function($scope, $http, CityService) {
 		}
 	};
 
+	$scope.onGetDistanceClick = function() {
+		var testi = {
+			origin:      'tampere',
+			destination: 'helsinki'
+		};
+
+		CityService.postDistanceParameters("/vaihtoehtoinen", testi, function(resp) {
+			console.log("jee");
+		}, function() {});
+	};
+
 	var getDistance = function() {
 		if($scope.origin !== "" && $scope.destination !== "") {
 			var url = 'etaisyys/' + $scope.origin + '/' + $scope.destination;

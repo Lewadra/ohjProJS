@@ -13,5 +13,9 @@ module.exports = function(app) {
 		mainController.getDistance(req, res);
 	});
 
+	app.post("/vaihtoehtoinen", function(req, res) {
+		mainController.postDistance(req,res);
+	});
+
 };
 
