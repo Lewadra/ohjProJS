@@ -4,6 +4,7 @@ app.controller('MainController', function($scope, $http, CityService) {
 	CityService.getCities('/kaupungit', function(resp) {
 		if(resp.length != 0) {
 			$scope.cities = resp;
+			console.log($scope.cities);
 			var factor = 30;
 			for(var i = 0; i < $scope.cities.length; i++) {
 				$scope.cities[i].longitude = resp[i].longitude * factor - 250;
@@ -26,9 +27,23 @@ app.controller('MainController', function($scope, $http, CityService) {
 			if(length <= radius) {
 				$scope.origin = toggle ? $scope.cities[i].cityName : $scope.origin;
 				$scope.destination = !toggle ? $scope.cities[i].cityName : "";
+				if (!toggle){
+					console.log("S: " + $scope.origin + " D: " + $scope.destination + "Cities: " + $scope.cities);
+					CityService.getShortestPath('/dijkstra', $scope.origin, $scope.destination, function(resp) {
+						if(resp.length != 0) {
+							$scope.distance = resp;
+						}
+						}, function(error) {
+							$scope.distance = "Error";
+							console.log(error);
+						});
+				}
 				return;
 			}
 		}
+
+
+
 	};
 
 });

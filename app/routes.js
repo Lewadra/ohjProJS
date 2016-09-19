@@ -13,5 +13,10 @@ module.exports = function(app) {
 		mainController.getNeighbors(req, res);
 	});
 
+	app.get("/dijkstra", function(req, res ){
+		console.log("Body is: ");
+		mainController.getShortestPath(req, res);
+	});
+
 };
 

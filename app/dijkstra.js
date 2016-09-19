@@ -1,9 +1,9 @@
 /*
-  var cities = [
-        {
-            cityName: "tampere", cityNeighbors: [
-            {turku: 150, vaasa: 240, helsinki: 170}]
-        },
+  var cities = {
+   tampere: {
+              cityName: "tampere", cityNeighbors: [
+              {turku: 150, vaasa: 240, helsinki: 170}]
+            },
         {
             cityName: "vaasa", cityNeighbors: [
             {tampere: 240, oulu: 320, kuopio: 380}]
@@ -12,71 +12,78 @@
             cityName: "oulu", cityNeighbors: [
             {vaasa: 320, kuopio: 290, kajaani: 180}]
         }
+   }     
  */
-
-
-module.exports = function (cities, startCity, endCity){
-
-  var allKnown = false;
-
-  // Add city distances and known
-  for (city in cities){
-    if(city.cityName === startCity.cityName){
-      city.distance = 0;
-      city.known = true;
-    }
-    else {
-      city.distance = 99999;
-      city.known = false;
-    }
-  }
-
-  // Go through startCity neighbors and execute checkNeighbors on each
-  for (n in startCity.cityNeighbors){
-    cities[n].distance = startCity.cityNeighbors[n];
-    checkNeighbors(n);
-  }
-
-  // Loop through cities, if unknown cities, get the unknown with the smallest distance and execute checkNeighbors
-  // If no more unknown cities, end loop
-  while (!allKnown){
-    for (city in cities){
-      allKnown = true;
-      if (!city.known){
-        checkNeighbors(getNearestUnknown());
-        allKnown = false;
+var checkNeighbors = function(cities, nearestName){
+    for (var i = 0; i < cities.length; i++){
+      if(cities[i].cityName == nearestName){
+        //TARKISTA LÄHIMMÄN NAAPURIT, JOS NIIDEN DISTANCE < OMA DISTANCE + NAAPURIN VALUE NIIN MUUTA DISTANCE
+        for (n in cities[i].cityNeighbors[0] ){ // loop naapurit
+		      for (var j = 0; j < cities.length; j++){ // loop kaupungit
+        	  if(cities[j].cityName == n){ //etsi naapuri kaupungeista
+            	if (cities[j].distance > cities[i].distance + cities[i].cityNeighbors[0][n]){ // jos naapurin oma distance > oma + naapuridist
+                cities[j].distance = cities[i].distance + cities[i].cityNeighbors[0][n];
+              }
+            }
+          }
+    	//document.write(" "  + n + " " + cities[0].cityNeighbors[0][n]);
+        }
+        cities[i].known = true;
       }
     }
+    return cities;
   }
 
-  if(allKnown){
-    return cities[endCity].distance;
-  }
+module.exports = {
 
-  // Check neighbors of selected city
-  // If current distance (CD) + distance to neighbor (DtN) is less than neighbors current distance to source (DtS) --> DtS = CD + DtN
-  // Finally set known = true to prevent repeating this step on selected city
-  var checkNeighbors = function (city){
-    for (n in city.cityNeighbors){
-      if (city.distance + city.cityNeighbors[n] < n.distance){
-        n.distance = city.distance + city.cityNeighbors[n];
+  
+  findShortestPath: function (cities, startCityName, endCityName){
+    // KOKO PASKA LÄPI, STARTCITY DISTANCE = 0, 
+    console.log(startCityName + " " + endCityName);
+   for (var i = 0; i < cities.length; i++){
+     console.log("city: " + cities[i].cityName);
+      if(cities[i].cityName == startCityName){
+        cities[i].distance = 0;
+        cities[i].known = false;
+      }
+      else {
+      	cities[i].distance = 9999;
+        cities[i].known = false;
       }
     }
-    city.known = true;
-  }
 
-  // Loop through cities
-  // Check unknown cities' distance and return the nearest
-  var getNearestUnknown = function(){
-    var nearest;
-    nearest.distance = 99999;
-    for (city in cities){
-      if (city.distance < nearest.distance && !city.known){
-        nearest = city;
+    var finished = false;
+
+    while(!finished){
+      finished = true;
+      for (var j = 0; j < cities.length; j++){ // loop all, check if all known
+        if (!cities[j].known){   
+          finished = false;           // found unknown
+          // ETSI LÄHIN KOKO PASKASTA, EKALLA KERRALLA STARTCITY
+          var nearest = {};
+          nearest.distance = 9999;
+
+          for (var k = 0; k < cities.length; k++){
+            if (cities[k].distance < nearest.distance && !cities[k].known){
+              nearest = cities[k];
+              nearest.distance = cities[k].distance;
+            }
+          }
+          cities = checkNeighbors(cities, nearest.cityName);
+
+        }
       }
     }
-    return nearest;
+    for (var l = 0; l < cities.length; l++){
+      if(cities[l].cityName == endCityName){
+        console.log (cities[l].distance);
+        return cities[l].distance;
+      }
+    }
+
   }
+
+  
 
 
 }
