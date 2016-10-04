@@ -4,7 +4,6 @@ app.controller('MainController', function($scope, $http, CityService) {
 	CityService.getCities('/kaupungit', function(resp) {
 		if(resp.length != 0) {
 			$scope.cities = resp;
-			console.log($scope.cities);
 			var factor = 30;
 			for(var i = 0; i < $scope.cities.length; i++) {
 				$scope.cities[i].longitude = resp[i].longitude * factor - 250;

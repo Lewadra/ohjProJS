@@ -18,19 +18,3 @@ app.service('CityService', function($http) {
     }
 });
 
- /* $http({
-            method: 'POST',
-            url: '/dijkstra',
-            data: {
-                cityArray: cities,
-                startCity: start,
-                endCity: end
-            },
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        })
-        .success(function (data, status, headers, config) {
-            console.log("Success");
-        })
-        .error(function (data, status, header, config) {
-            console.log("Fail");
-        });*/
