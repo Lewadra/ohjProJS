@@ -4,10 +4,10 @@ app.controller('MainController', function($scope, $http, CityService) {
 	CityService.getCities('/kaupungit', function(resp) {
 		if(resp.length != 0) {
 			$scope.cities = resp;
-			var factor = 30;
+			var factor = 40;
 			for(var i = 0; i < $scope.cities.length; i++) {
-				$scope.cities[i].longitude = resp[i].longitude * factor - 250;
-				$scope.cities[i].latitude = -Math.abs(resp[i].latitude) * factor + 2000;
+				$scope.cities[i].longitude = resp[i].longitude * factor - 550;
+				$scope.cities[i].latitude = -Math.abs(resp[i].latitude) * factor + 2750;
 			}
 		}
 	}, function(error) {
